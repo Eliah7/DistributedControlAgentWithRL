@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="ai.djl:api:0.8.0" type="repository">
+    <properties maven-id="ai.djl:api:0.8.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/api-0.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.8.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jna-5.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-compress-1.20.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.30.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/api-0.8.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.8.6-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jna-5.3.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-compress-1.20-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.30-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/api-0.8.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.8.6-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jna-5.3.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-compress-1.20-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.30-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

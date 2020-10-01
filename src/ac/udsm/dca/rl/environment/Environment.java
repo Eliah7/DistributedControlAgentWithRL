@@ -8,14 +8,22 @@ import java.util.List;
 public class Environment {
     private PGOAnalyzer pgoAnalyzer; // for analyzing power flow
     private State state;
+    Integer actionSize = 0;
 
     public Environment(PGOAnalyzer pgoAnalyzer, State state){
         this.pgoAnalyzer = pgoAnalyzer;
         this.state = state;
+        if (this.state != null){
+            this.actionSize = this.state.getBusData().getRowSize();
+        }
     }
 
     public State getState() {
         return state;
+    }
+
+    public Integer getActionSize() {
+        return actionSize;
     }
 
     public void step(List<Action> actions){
