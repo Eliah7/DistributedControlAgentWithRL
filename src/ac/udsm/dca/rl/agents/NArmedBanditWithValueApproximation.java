@@ -5,7 +5,15 @@ import ac.udsm.dca.rl.environment.Environment;
 import ac.udsm.dca.utils.ArrayOperationsService;
 import ai.djl.ndarray.NDArray;
 import ai.djl.ndarray.NDManager;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 
+import javax.swing.*;
+import java.awt.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +56,11 @@ public class NArmedBanditWithValueApproximation extends Agent{
     public void train() {
         int episode = 0;
         List<Double> actions;
+        List<Double> rewards = new ArrayList<>();
 
         while (episode < episodes){
-            // choose action with probability epsilon
-            if (new Random().nextDouble() < epsilon){
+//             choose action with probability epsilon
+            if ((new Random().nextDouble())  <= this.epsilon ){
                 actions = arrayOperationsService.permutationForI(
                         this.environment.getActionSize(),
                         new Random().nextInt(this.environment.getActionSize()));
@@ -64,24 +73,54 @@ public class NArmedBanditWithValueApproximation extends Agent{
 
             // get reward
             Double reward = this.environment.reward();
+            rewards.add(reward);
 
             // update weights
             for (int i = 0; i < weights.size(); i++) {
                 try {
-                    weights.set(i, weights.get(i) * (reward - arrayOperationsService.dot(actions, weights)));
-                    System.out.println("Weights: " + weights);
+                    weights.set(i, weights.get(i) + learningRate * (reward - arrayOperationsService.dot(actions, weights)));
+//
                 } catch (Exception e){
                     System.out.println(e);
                 }
             }
+            System.out.println("Weights: " + weights);
 
             // update epsilon
-            this.epsilon = this.epsilon / episode;
+            this.epsilon = this.epsilon * 0.7 ;
 
             // run until episode ends
             episode++;
             System.out.println("EPISODE " + episode + ": REWARD: " + reward + " \nACTION: " + actions + "\n\n\n");
         }
+
+        plotGraph(rewards);
+    }
+
+    private void plotGraph(List<Double> rewards){
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (int i = 0; i < rewards.size(); i++) {
+            dataset.addValue(rewards.get(i), "reward", String.valueOf(i));
+        }
+
+        JFreeChart c = (JFreeChart) ChartFactory.createLineChart(
+                "NArmedBanditWithValueApproximation Training Curve",
+                "Episodes",
+                "Rewards",
+               dataset,
+                PlotOrientation.VERTICAL,
+                true, true, false);
+
+        ChartPanel chartPanel = new ChartPanel(c);
+        Dimension d = new java.awt.Dimension(560, 367);
+
+        chartPanel.setPreferredSize(d);
+        JFrame f = new JFrame();
+        f.setPreferredSize(d);
+        f.setContentPane(chartPanel);
+        f.setVisible(true);
+        f.pack();
+        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     private List<Double> getMaxAction(){

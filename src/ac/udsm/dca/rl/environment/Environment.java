@@ -2,13 +2,16 @@ package ac.udsm.dca.rl.environment;
 
 import ac.udsm.dca.interfaces.PGOAnalyzer;
 import ac.udsm.dca.math.Matrix;
+import ac.udsm.dca.utils.ArrayOperationsService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Environment {
     private PGOAnalyzer pgoAnalyzer; // for analyzing power flow
     private State state;
     Integer actionSize = 0;
+    ArrayOperationsService arrayOperationsService = new ArrayOperationsService();
 
     public Environment(PGOAnalyzer pgoAnalyzer, State state){
         this.pgoAnalyzer = pgoAnalyzer;
@@ -35,7 +38,7 @@ public class Environment {
         }
 
         // use the new lineData and busData for analysis
-        updatePGOAnalyzerData(state.lineData, state.busData);
+//        updatePGOAnalyzerData(state.lineData, state.busData);
     }
 
     void updatePGOAnalyzerData(Matrix lineData, Matrix busData){
@@ -44,9 +47,25 @@ public class Environment {
     }
 
     public double reward(){
-        // add a reward from dot product of status and priority
+        List<Double> priority = new ArrayList<>();
+        List<Double> status = new ArrayList<>();
+        Double reward = 0.0;
 
-        return pgoAnalyzer.calculate();
+        // add a reward from dot product of status and priority
+        for (int i = 0; i < state.busData.getRowSize(); i++) {
+            reward = Math.pow(state.busData.getAt(i+1, 6), 2) * state.busData.getAt(i+1, 5) * state.busData.getAt(i+1, 2);
+            priority.add(Math.pow(state.busData.getAt(i+1, 6), 2));
+            status.add(state.busData.getAt(i+1, 5));
+        }
+
+        try {
+//            return reward;
+            return arrayOperationsService.dot(priority, status);
+        } catch (Exception e){
+            System.out.println(e);
+            return 0.0;
+        }
+//        return pgoAnalyzer.calculate();
     }
 
     public void reset(){

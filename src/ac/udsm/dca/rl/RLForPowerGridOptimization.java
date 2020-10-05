@@ -23,8 +23,9 @@ public class RLForPowerGridOptimization {
                 environment,
                 1000,
                 0.01,
-                0.01);
+                0.001);
 
         bandit.train();
     }
+
 }
