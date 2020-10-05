@@ -88,6 +88,7 @@ public class Dlf extends PGOAnalyzer {
             }
             i++;
         }
+
         lineData = NLD;
         Matrix bibc = new Matrix(lineData.getRowSize(), lineData.getRowSize());
         for (int ii = 1; ii <= lineData.getRowSize(); ii++) {
@@ -100,6 +101,7 @@ public class Dlf extends PGOAnalyzer {
                 bibc.setAt(pos, pos, 1);
             }
         }
+
         ComplexMatrix BCBV = bibc.transpose().multiply(Z.diag());
         ComplexMatrix S = new ComplexMatrix(busData, 2, 3).divide(baseMva * 1000);
         ComplexMatrix Vo = new ComplexMatrix(lineData.getRowSize(), 1, new Complex(1));
@@ -128,7 +130,8 @@ public class Dlf extends PGOAnalyzer {
         double s = 1e5;
         ComplexMatrix Pbrloss = (((vft.vectorMultiply(vft)).vectorMultiply(R)).divide(Z.abs().vectorMultiply(Z.abs()))).multiply(1e5);
         Complex cg = Pbrloss.sumColumns(1);
-        return 0;
+
+        return cg.abs();
     }
 
 }

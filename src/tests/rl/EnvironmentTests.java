@@ -27,17 +27,17 @@ public class EnvironmentTests {
 
     @Test
     public void testStep(){
-        List<Action> actions = new ArrayList<>();
-        List<Action> results = new ArrayList<>();
+        List<Double> actions = new ArrayList<>();
+        List<Double> results = new ArrayList<>();
 
         for (int i = 0; i < new Matrix(Main.loadData).getRowSize(); i++){
-            actions.add(Action.OFF);  // turn each node off
+            actions.add(0.0);  // turn each node off
         }
 
         this.environment.step(actions); // apply actions
 
         for (int i = 0; i < new Matrix(Main.loadData).getRowSize(); i++){
-            results.add(this.environment.getState().getBusData().getAt(i + 1, 5) == 0.0 ? Action.OFF : Action.ON);
+            results.add(this.environment.getState().getBusData().getAt(i + 1, 5) == 0.0 ? 0.0 : 1.0);
         }
 
         Assert.assertEquals(actions, results);

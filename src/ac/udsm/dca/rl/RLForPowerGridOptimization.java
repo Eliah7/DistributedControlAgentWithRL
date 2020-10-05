@@ -3,6 +3,7 @@ package ac.udsm.dca.rl;
 import ac.udsm.dca.Main;
 import ac.udsm.dca.core.Dlf;
 import ac.udsm.dca.math.Matrix;
+import ac.udsm.dca.rl.agents.NArmedBanditWithValueApproximation;
 import ac.udsm.dca.rl.environment.Environment;
 import ac.udsm.dca.rl.environment.State;
 
@@ -18,6 +19,12 @@ public class RLForPowerGridOptimization {
 
         System.out.println("=====> Running a multi armed bandit algorithm for Power Grid Optimization ");
 
+        NArmedBanditWithValueApproximation bandit = new NArmedBanditWithValueApproximation(
+                environment,
+                1000,
+                0.01,
+                0.01);
 
+        bandit.train();
     }
 }

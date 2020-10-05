@@ -26,11 +26,11 @@ public class Environment {
         return actionSize;
     }
 
-    public void step(List<Action> actions){
+    public void step(List<Double> actions){
         // take an action from what the agent has specified
         if (actions.size() == state.busData.getRowSize()){ // there is an equal number of columns in actions and
             for(int row = 0; row < actions.size(); row++){
-                state.busData = state.busData.setValue(row+1, 5, actions.get(row).value);
+                state.busData = state.busData.setValue(row+1, 5, actions.get(row));
             }
         }
 
@@ -45,6 +45,7 @@ public class Environment {
 
     public double reward(){
         // add a reward from dot product of status and priority
+
         return pgoAnalyzer.calculate();
     }
 

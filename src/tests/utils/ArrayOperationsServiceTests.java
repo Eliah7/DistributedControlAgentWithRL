@@ -74,11 +74,27 @@ public class ArrayOperationsServiceTests {
     @Test
     public void testPermutationForI(){
         List result = arrayOperationsService.permutationForI(9, 3);
-        List<Integer> expectedResult = List.of(0,0,0,0,0,0,0,1,1);
+        List<Double> expectedResult = List.of(0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0);
 
         System.out.println(result);
         System.out.println(expectedResult);
         Assert.assertTrue(expectedResult.containsAll(result));
+
+    }
+
+    @Test
+    public void testDot(){
+        List<Double> arr1 = List.of(2.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0);
+        List<Double> arr2 = List.of(2.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0);
+
+        List<Double> expectedResult = List.of(4.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,2.0);
+
+        try {
+            Double result = arrayOperationsService.dot(arr1, arr2);
+            Assert.assertEquals(expectedResult.stream().reduce(Double::sum).get(), result);
+        } catch (Exception e){
+            System.out.println(e);
+        }
 
     }
 }
