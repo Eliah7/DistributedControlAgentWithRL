@@ -59,7 +59,7 @@ public class NArmedBanditWithValueApproximation extends Agent{
         List<Double> rewards = new ArrayList<>();
 
         while (episode < episodes){
-//             choose action with probability epsilon
+            // choose action with probability epsilon
             if ((new Random().nextDouble())  <= this.epsilon ){
                 actions = arrayOperationsService.permutationForI(
                         this.environment.getActionSize(),
@@ -79,7 +79,6 @@ public class NArmedBanditWithValueApproximation extends Agent{
             for (int i = 0; i < weights.size(); i++) {
                 try {
                     weights.set(i, weights.get(i) + learningRate * (reward - arrayOperationsService.dot(actions, weights)));
-//
                 } catch (Exception e){
                     System.out.println(e);
                 }
@@ -91,6 +90,7 @@ public class NArmedBanditWithValueApproximation extends Agent{
 
             // run until episode ends
             episode++;
+            this.environment.reset();
             System.out.println("EPISODE " + episode + ": REWARD: " + reward + " \nACTION: " + actions + "\n\n\n");
         }
 

@@ -1,5 +1,7 @@
 package ac.udsm.dca.rl.environment;
 
+import ac.udsm.dca.Main;
+import ac.udsm.dca.core.Dlf;
 import ac.udsm.dca.interfaces.PGOAnalyzer;
 import ac.udsm.dca.math.Matrix;
 import ac.udsm.dca.utils.ArrayOperationsService;
@@ -69,7 +71,13 @@ public class Environment {
     }
 
     public void reset(){
+        Dlf pf = new Dlf(new Matrix(Main.loadData), new Matrix(Main.lineData), 1);
 
+        this.pgoAnalyzer = pf;
+        this.state = new State(
+                new Matrix(Main.loadData),
+                new Matrix(Main.lineData)
+        );
     }
 
 
