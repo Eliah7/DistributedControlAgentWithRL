@@ -16,8 +16,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * NArmedBandit using Linear Value Function Approximation
@@ -60,13 +62,19 @@ public class NArmedBanditWithValueApproximation extends Agent{
 
         while (episode < episodes){
             // choose action with probability epsilon
+//            actions = arrayOperationsService.permutationForI(
+//                    this.environment.getActionSize(),
+//                    new Random().nextInt(this.environment.getActionSize()));
+//            System.out.println(actions);
+
             if ((new Random().nextDouble())  <= this.epsilon ){
                 actions = arrayOperationsService.permutationForI(
                         this.environment.getActionSize(),
-                        new Random().nextInt(this.environment.getActionSize()));
+                        new Random().nextInt(this.environment.getActionSize())); // problem is here
             } else {
                 actions = this.getMaxAction();
             }
+
 
             // make action
             this.environment.step(actions);
@@ -90,6 +98,7 @@ public class NArmedBanditWithValueApproximation extends Agent{
 
             // run until episode ends
             episode++;
+
             this.environment.reset();
             System.out.println("EPISODE " + episode + ": REWARD: " + reward + " \nACTION: " + actions + "\n\n\n");
         }
@@ -144,13 +153,17 @@ public class NArmedBanditWithValueApproximation extends Agent{
 
     private void initializeRandomWeights(){
        this.weights = new ArrayList<>();
+        List<Double> max = Arrays.asList(Integer.toBinaryString(this.environment.getActionSize()).split(""))
+                .stream()
+                .map(Double::parseDouble)
+                .collect(Collectors.toList());
 
-       System.out.println(Math.random());
-       for (int i = 0; i <this.environment.getActionSize() ; i++) {
+
+       for (int i = 0; i < this.environment.getActionSize(); i++) {
            this.weights.add(new Random().nextDouble());
        }
 
-       System.out.print(this.weights);
+//       System.out.print(this.weights);
     }
 
     private void initializeListOfActions(){

@@ -32,15 +32,19 @@ public class ArrayOperationsService<T>{
     }
 
     public List<Double> permutationForI(int maxLength, int action){
-        List<Double> permutation = Arrays.asList(Integer.toBinaryString(action).split(""))
+        List<Double> max = Arrays.asList(Integer.toBinaryString(maxLength).split(""))
                 .stream()
                 .map(Double::parseDouble)
                 .collect(Collectors.toList());
 
+        List<Double> permutation = Arrays.asList(Integer.toBinaryString(action).split(""))
+                .stream()
+                .map(Double::parseDouble)
+                .collect(Collectors.toList());
         int remainingItems = maxLength - permutation.size();
         if (remainingItems != 0){
             for (int i = 0; i < remainingItems; i++) {
-                permutation.add(0, 0.0);
+                permutation.add(0, 1.0);
             }
         }
 

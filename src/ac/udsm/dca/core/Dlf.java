@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import py4j.GatewayServer;
 
 /**
  * @author Ramadhan Juma <ramaj93@yahoo.com>
@@ -27,6 +28,30 @@ public class Dlf extends PGOAnalyzer {
         this.busData = busData;
         this.lineData = lineData;
         this.centralBus = centralBus;
+    }
+
+    public Dlf(){
+
+    }
+
+    public void setBusData(double[][] busData){
+        this.busData = new Matrix(busData);
+        System.out.println(this.busData);
+    }
+
+    public void setCentralBus(int centralBus){
+        this.centralBus = centralBus;
+    }
+
+    public void setLineData(double[][] lineData){
+        this.lineData = new Matrix(lineData);
+        System.out.println(this.lineData);
+    }
+
+    public static void main(String[] args){
+        Dlf app = new Dlf();
+        GatewayServer server = new GatewayServer(app);
+        server.start();
     }
 
     public double calculate() {
