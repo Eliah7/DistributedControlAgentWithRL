@@ -24,6 +24,8 @@ import py4j.GatewayServer;
  */
 public class Dlf extends PGOAnalyzer {
 
+    public Matrix powerValues;
+
     public Dlf(Matrix busData, Matrix lineData, int centralBus) {
         this.busData = busData;
         this.lineData = lineData;
@@ -36,7 +38,6 @@ public class Dlf extends PGOAnalyzer {
 
     public void setBusData(double[][] busData){
         this.busData = new Matrix(busData);
-        System.out.println(this.busData);
     }
 
     public void setCentralBus(int centralBus){
@@ -45,7 +46,6 @@ public class Dlf extends PGOAnalyzer {
 
     public void setLineData(double[][] lineData){
         this.lineData = new Matrix(lineData);
-        System.out.println(this.lineData);
     }
 
     public static void main(String[] args){
@@ -54,7 +54,7 @@ public class Dlf extends PGOAnalyzer {
         server.start();
     }
 
-    public double calculate() {
+    synchronized public double calculate() {
         Matrix F = lineData.extract(2, 3);
         Matrix M = F.max();
         int N = (int) M.maxValue();
@@ -152,6 +152,7 @@ public class Dlf extends PGOAnalyzer {
         }
 
         Matrix vft = VFT.abs();
+        this.powerValues = Vbus.abs();
         double s = 1e5;
         ComplexMatrix Pbrloss = (((vft.vectorMultiply(vft)).vectorMultiply(R)).divide(Z.abs().vectorMultiply(Z.abs()))).multiply(1e5);
         Complex cg = Pbrloss.sumColumns(1);
@@ -159,4 +160,14 @@ public class Dlf extends PGOAnalyzer {
         return cg.abs();
     }
 
+    public Double[] getPowerValues() {
+        double[][] data = powerValues.getData();
+        Double[] powerValues = new Double[data.length];
+
+        for (int i = 0; i < data.length ; i++) {
+            powerValues[i] = data[i][0];
+//            System.out.println(powerValues[i]);
+        }
+        return powerValues;
+    }
 }

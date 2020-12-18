@@ -50,7 +50,7 @@ public class Matrix {
         }
     }
 
-    public Matrix copyColumn(Matrix matrix, int source, int dest) {
+    synchronized public Matrix copyColumn(Matrix matrix, int source, int dest) {
         for (int i = 0; i < getRowSize(); i++) {
             data[i][dest - 1] = matrix.getData(i, source - 1);
         }
@@ -192,7 +192,7 @@ public class Matrix {
         return new Matrix(data);
     }
 
-    private double getData(int row, int column) {
+    synchronized private double getData(int row, int column) {
         return data[row][column];
     }
 
@@ -405,7 +405,7 @@ public class Matrix {
         return matrix1;
     }
 
-    public ComplexMatrix multiply(ComplexMatrix matrix) {
+    synchronized public ComplexMatrix multiply(ComplexMatrix matrix) {
         ComplexMatrix matrix1 = new ComplexMatrix(getRowSize(), matrix.getColumnSize());
 
         for (int a = 0; a < getRowSize(); a++) {

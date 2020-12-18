@@ -52,7 +52,7 @@ public class ComplexMatrix {
         }
     }
 
-    public Complex[][] getData() {
+    synchronized public Complex[][] getData() {
         return data;
     }
 
@@ -164,7 +164,7 @@ public class ComplexMatrix {
         return new ComplexMatrix(data);
     }
 
-    private Complex getData(int row, int column) {
+    synchronized private Complex getData(int row, int column) {
         return data[row][column];
     }
 
@@ -172,7 +172,7 @@ public class ComplexMatrix {
         data[row][column] = complex;
     }
 
-    public Complex getAt(int row, int column) {
+    synchronized public Complex getAt(int row, int column) {
         return getData(row - 1, column - 1);
     }
 

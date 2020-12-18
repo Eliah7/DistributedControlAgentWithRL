@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: /Users/elia/Desktop/DistributedControlAgent-master
+Main-Class: ac.udsm.dca.Main
+

@@ -26,11 +26,12 @@ public class Problem {
     private double maxCapacity;
     Item[] items;
 
-    Problem(int dimension, Item[] items, double maxCapacity) {
+    public Problem(Integer dimension, Item[] items, double maxCapacity) {
         this.items = items;
         this.dimension = dimension;
         this.maxCapacity = maxCapacity;
     }
+
 
     double getFitness(Particle p) {
         return solveProblem(p);
